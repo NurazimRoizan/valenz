@@ -222,7 +222,7 @@ export class App {
   }
 
   final() {
-    alert("Selamat hari natal! Eh, Valentine's Day dalam melayu apa eh");
+    alert("Selamat hari natal! Eh, Valentine's Day dalam melayu apa eh. Dah, gi bukak hadiah :)");
   }
 
   next() {
