@@ -1,0 +1,149 @@
+<div class="container d-flex flex-column align-items-center justify-content-center min-vh-100 text-center p-3">
+
+  <div class="emoji-display mb-4" [class.emoji-pop]="true" [class.shake-anim]="stage() === 8 && s8_shake()"
+    style="font-size: 8rem; cursor: default;">
+    {{ emoji() }}
+  </div>
+
+  <!-- Stage 1 -->
+  @if (stage() === 1) {
+  <div class="stage-container w-100 fade-in">
+    <h2 class="mb-5 display-5 fw-bold">{{ s1_msg() }}</h2>
+    @if (s1_count() < 3) { <div class="d-flex gap-4 justify-content-center align-items-center">
+      <!-- Button Left -->
+      <button class="btn btn-lg px-5 py-3 fw-bold" [class.btn-outline-danger]="!s1_swapped()"
+        [class.btn-success]="s1_swapped()" (click)="s1_clickLeft()">
+        {{ s1_swapped() ? 'Yes' : 'No' }}
+      </button>
+
+      <!-- Button Right -->
+      <button class="btn btn-lg px-5 py-3 fw-bold" [class.btn-success]="!s1_swapped()"
+        [class.btn-outline-danger]="s1_swapped()" (click)="s1_clickRight()">
+        {{ s1_swapped() ? 'No' : 'Yes' }}
+      </button>
+  </div>
+  }
+</div>
+}
+
+<!-- Stage 2 -->
+@if (stage() === 2) {
+<div class="stage-container w-100 fade-in">
+  <h2 class="mb-5 display-5 fw-bold">{{ s2_msg() }}</h2>
+  @if (!s2_done()) {
+  <div class="position-relative w-100 overflow-hidden rounded bg-light bg-opacity-25 shadow-sm" style="height: 300px;">
+    <!-- Dummy YES button reference to keep flow? No, absolute position one. -->
+    <button class="btn btn-primary btn-lg px-5 py-3 fw-bold m-5" [ngStyle]="s2_btnStyle()" (mouseenter)="s2_over()"
+      (click)="s2_yes()">YES</button>
+  </div>
+  }
+</div>
+}
+
+<!-- Stage 3 -->
+@if (stage() === 3) {
+<div class="stage-container w-100 fade-in">
+  <h2 class="mb-5 display-5 fw-bold">Open your digital gift?</h2>
+  @if (!s3_started()) {
+  <button class="btn btn-warning btn-lg px-5 py-3 fw-bold text-dark" (click)="s3_open()">OPEN 🎁</button>
+  } @else {
+  <div class="progress mb-3 mx-auto" style="width: 100%; max-width: 400px; height: 40px;">
+    <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar"
+      [style.width.%]="s3_progress()">{{ s3_progress() }}%</div>
+  </div>
+  @if (s3_showResult()) {
+  <div class="card mx-auto mt-4 border-3 border-dark" style="max-width: 300px;">
+    <div class="card-body">
+      <h5 class="card-title font-monospace">Karya berat saya (It's a heart... kot)</h5>
+      <div
+        style="width: 100px; height: 100px; background: red; margin: 20px auto; clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);">
+      </div>
+      <p class="card-text text-muted"></p>
+    </div>
+  </div>
+  }
+  }
+</div>
+}
+
+<!-- Stage 4 -->
+@if (stage() === 4) {
+<div class="stage-container w-100 fade-in">
+  <h2 class="mb-4 display-5 fw-bold">{{ s4_msg() }}</h2>
+  <div class="rating-stars display-1 text-warning cursor-pointer user-select-none">
+    @for (star of s4_stars; track star) {
+    <span (click)="s4_rate()" class="pe-2" style="cursor: pointer;">
+      @if (star <= s4_rating()) { ★ } @else { ☆ } </span>
+        }
+  </div>
+</div>
+}
+
+<!-- Stage 5 -->
+@if (stage() === 5) {
+<div class="stage-container w-100 fade-in">
+  <h2 class="mb-4 display-5 fw-bold">Annual Compliments</h2>
+  @if (!s5_done()) {
+  <button class="btn btn-info btn-lg mb-4 text-white fw-bold" (click)="s5_gimme()">Gimme a Compliment</button>
+  @if (s5_curr()) {
+  <div class="alert alert-primary fs-3 shadow-sm mx-auto" style="max-width: 600px;">
+    "{{ s5_curr() }}"
+  </div>
+  }
+  }
+</div>
+}
+
+<!-- Stage 6 -->
+@if (stage() === 6) {
+<div class="stage-container w-100 fade-in">
+  <h2 class="mb-5 display-5 fw-bold">{{ s6_msg() }}</h2>
+  <div class="d-flex gap-4 justify-content-center">
+    <button class="btn btn-success btn-lg px-5 py-3" (click)="next()">Yes</button>
+    <button class="btn btn-danger btn-lg px-5 py-3" (click)="s6_no()">No</button>
+  </div>
+</div>
+}
+
+<!-- Stage 7 -->
+@if (stage() === 7) {
+<div class="stage-container w-100 fade-in" style="max-width: 500px;">
+  <h2 class="mb-4 display-5 fw-bold">What's for dinner?</h2>
+  <input type="text" class="form-control form-control-lg text-center p-3 fs-3" [ngModel]="s7_in()"
+    (input)="s7_type($event)" (keyup.enter)="s7_enter()" placeholder="Type here..." [readOnly]="s7_locked()">
+</div>
+}
+
+<!-- Stage 8 -->
+@if (stage() === 8) {
+<div class="stage-container w-100 fade-in" style="max-width: 600px;">
+  <h2 class="mb-5 display-5 fw-bold">Final Decision</h2>
+
+  <div class="position-relative mb-5 px-4">
+    <input type="range" class="form-range custom-range" style="height: 40px;" min="0" max="100" [ngModel]="s8_val()"
+      (input)="s8_slide($event)">
+    <div class="d-flex justify-content-between mt-2 fw-bold fs-5">
+      <span class="text-success">I loike dis</span>
+      <span class="text-danger">Saya kecewa</span>
+    </div>
+  </div>
+
+  @if (s8_done()) {
+  <div class="mt-4">
+    <button class="btn btn-lg btn-outline-danger px-5 py-3 fs-2 animate-pulse" (click)="final()">
+      The Real Surprise 🎁
+    </button>
+  </div>
+  }
+</div>
+}
+
+<!-- Continue Button -->
+@if (showContinue() && stage() < 8) { <div class="mt-5 fixed-bottom pb-5">
+  <button class="btn btn-light btn-lg border shadow-lg px-5 rounded-pill fw-bold text-primary" (click)="next()">
+    Continue ➡️
+  </button>
+  </div>
+  }
+
+  </div>
