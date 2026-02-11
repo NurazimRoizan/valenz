@@ -54,3 +54,14 @@ The website guides the user through 8 stages of increasingly "annoying" but fun 
 -   `src/app/app.html`: The HTML template using `@if` and `@switch` syntax.
 -   `src/app/app.css`: Custom styles for glass effect and specific animations.
 -   `src/styles.css`: Global styles and Bootstrap import.
+
+## 🎥 Video Backgrounds
+
+The application supports background videos for different stages. 
+Place the following video files in the `public/assets/` folder:
+
+- `videoA.mp4`: Plays during Stage 2 & 3
+- `videoB.mp4`: Plays during Stage 4 & 5
+- `videoC.mp4`: Plays during Stage 6 & 7
+- `videoD.mp4`: Plays after the final Stage 8 popup (The Real Surprise)
+

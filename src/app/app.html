@@ -1,4 +1,13 @@
-<div class="container d-flex flex-column align-items-center justify-content-center min-vh-100 text-center p-3">
+@if (videoSrc()) {
+<video [src]="videoSrc()" autoplay muted loop playsinline
+  class="position-fixed top-0 start-0 w-100 h-100 object-fit-cover" style="z-index: 0; pointer-events: none;">
+</video>
+}
+
+@if (!showFinalVideo()) {
+<div
+  class="container d-flex flex-column align-items-center justify-content-center min-vh-100 text-center p-3 position-relative"
+  style="z-index: 1;">
 
   <div class="emoji-display mb-4" [class.emoji-pop]="true" [class.shake-anim]="stage() === 8 && s8_shake()"
     style="font-size: 8rem; cursor: default;">
@@ -147,3 +156,4 @@
   }
 
   </div>
+  }

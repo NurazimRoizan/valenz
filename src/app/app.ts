@@ -15,6 +15,16 @@ export class App {
   emoji = signal('😍');
 
   showContinue = signal(false);
+  showFinalVideo = signal(false);
+
+  videoSrc = computed(() => {
+    if (this.showFinalVideo()) return 'assets/videoD.mp4';
+    const s = this.stage();
+    if (s >= 2 && s <= 3) return '/assets/videoA.mp4';
+    if (s >= 4 && s <= 5) return 'assets/videoB.mp4';
+    if (s >= 6 && s <= 7) return 'assets/videoC.mp4';
+    return null;
+  });
 
   // Stage 1
   s1_count = signal(0);
@@ -222,7 +232,8 @@ export class App {
   }
 
   final() {
-    alert("Selamat hari natal! Eh, Valentine's Day dalam melayu apa eh. Dah, gi bukak hadiah :)");
+    alert("Selamat hari natal! Eh, Valentine's Day dalam melayu apa eh. Ha apa2 je la, enjoy titik peluh ku dan my wonderful voice in the backgound. VOLUME UP !!! :)");
+    this.showFinalVideo.set(true);
   }
 
   next() {
