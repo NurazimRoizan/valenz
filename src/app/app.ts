@@ -20,7 +20,7 @@ export class App {
   videoSrc = computed(() => {
     if (this.showFinalVideo()) return 'assets/videoD.mp4';
     const s = this.stage();
-    if (s >= 2 && s <= 3) return '/assets/videoA.mp4';
+    if (s >= 2 && s <= 3) return 'assets/videoA.mp4';
     if (s >= 4 && s <= 5) return 'assets/videoB.mp4';
     if (s >= 6 && s <= 7) return 'assets/videoC.mp4';
     return null;

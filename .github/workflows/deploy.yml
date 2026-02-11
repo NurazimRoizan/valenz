@@ -25,11 +25,16 @@ jobs:
         run: npm ci
 
       - name: Build
-        # Using npx ng build ensures we use the local CLI and pass arguments correctly
-        run: npx ng build --base-href /valenz/
+        # This will use the production configuration with baseHref set in angular.json
+        run: npx ng build --configuration production
+
+      - name: Post-build (Fix GitHub Pages)
+        run: |
+          cp dist/valentine-prank/browser/index.html dist/valentine-prank/browser/404.html
+          touch dist/valentine-prank/browser/.nojekyll
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: dist/valentine-prank/browser
-          branch: gh-pages # The branch the action should deploy to.
+          branch: gh-pages

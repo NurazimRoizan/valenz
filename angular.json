@@ -55,6 +55,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/valenz/",
               "budgets": [
                 {
                   "type": "initial",
