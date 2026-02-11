@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # Set a branch to deploy
+      - main
 
 permissions:
   contents: write
@@ -25,9 +25,11 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run build -- --base-href /valenz/
+        # Using npx ng build ensures we use the local CLI and pass arguments correctly
+        run: npx ng build --base-href /valenz/
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: dist/valentine-prank/browser # The folder the action should deploy.
+          folder: dist/valentine-prank/browser
+          branch: gh-pages # The branch the action should deploy to.
